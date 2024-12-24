@@ -11,12 +11,20 @@ const Navbar = () => {
         >
           Expert Train
         </h1>
-        <button
-          onClick={() => navigate("/login")}
-          className='bg-blue-600 text-white py-2 px-5'
-        >
-          Login
-        </button>
+        <div className='flex gap-2'>
+          <button
+            onClick={() => navigate("/login")}
+            className='bg-blue-600 text-white py-2 px-5'
+          >
+            Sign In
+          </button>
+          <button
+            onClick={() => navigate("/sign-up")}
+            className='bg-blue-600 text-white py-2 px-5'
+          >
+            Sign Up
+          </button>
+        </div>
       </div>
     </div>
   );

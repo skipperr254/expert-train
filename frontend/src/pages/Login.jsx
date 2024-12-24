@@ -31,9 +31,8 @@ const Login = () => {
       console.log(result);
 
       navigate("/");
-    } catch (e) {
-      setError(e?.response?.data?.message);
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   };
 
