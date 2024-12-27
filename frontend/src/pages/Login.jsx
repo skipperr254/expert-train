@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,13 +26,12 @@ const Login = () => {
       });
 
       const result = await response.json();
-      //   const token = response.data.token;
 
       console.log(result);
 
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log("Catched error: ", error);
     }
   };
 
@@ -46,25 +45,32 @@ const Login = () => {
           </p>
         )}
         <hr className='bg-blue-700' />
-        <form className='flex flex-col gap-5 mt-5' onSubmit={handleSubmit}>
+        <form className='flex flex-col gap-5 mt-5 mb-5' onSubmit={handleSubmit}>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             type='text'
             placeholder='example@email.com'
-            className='border border-gray-400 outline-none py-1 px-2 font-light focus:border-gray-600'
+            className='border border-gray-400 outline-none py-1 px-2 focus:border-gray-600'
           />
           <input
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             type='password'
             placeholder='Password'
-            className='border border-gray-400 outline-none py-1 px-2 font-light'
+            className='border border-gray-400 outline-none py-1 px-2 focus:border-gray-600'
           />
           <button className='text-white bg-blue-500 py-2' type='submit'>
             Login
           </button>
         </form>
+        <hr />
+        <p className='mt-3 text-sm '>
+          Don&apos;t have an account yet?{" "}
+          <Link className='text-blue-700 hover:underline' to='/sign-up'>
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -22,9 +22,12 @@ const Register = () => {
         body: JSON.stringify({ username, email, password }),
       });
 
+      console.log("Response", response);
       const result = await response.json();
-      console.log(result);
-      navigate("/");
+      if (result.error.code === 11000) {
+        setError("Username already taken. Try another one");
+      }
+      //   navigate("/login");
     } catch (error) {
       setError(error.message);
     }
@@ -42,16 +45,16 @@ const Register = () => {
           </p>
         )}
         <hr />
-        <form className='flex flex-col gap-5 mt-2' onSubmit={handleSubmit}>
+        <form className='flex flex-col gap-5 mt-5 mb-5' onSubmit={handleSubmit}>
           <input
-            className='py-1 px-2 font-light border border-gray-400 outline-none focus:border-gray-700'
+            className='py-1 px-2 border border-gray-400 outline-none focus:border-gray-700'
             type='text'
             placeholder='Username'
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
-            className='py-1 px-2 font-light border border-gray-400 outline-none focus:border-gray-700'
+            className='py-1 px-2 border border-gray-400 outline-none focus:border-gray-700'
             type='email'
             placeholder='email@example.com'
             required
@@ -59,7 +62,7 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
-            className='py-1 px-2 font-light border border-gray-400 outline-none focus:border-gray-700'
+            className='py-1 px-2 border border-gray-400 outline-none focus:border-gray-700'
             type='password'
             placeholder='Password'
             required
@@ -70,6 +73,13 @@ const Register = () => {
             Sign Up
           </button>
         </form>
+        <hr />
+        <p className='mt-3 text-sm '>
+          Already have an account?{" "}
+          <Link className='text-blue-700 hover:underline' to='/login'>
+            Sign In
+          </Link>
+        </p>
       </div>
     </div>
   );
