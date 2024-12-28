@@ -1,10 +1,9 @@
 const express = require("express");
 const cors = require("cors")
-const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const userRouter = require("./routes/user.routes.js")
 
-
+/* Import the user model */
 const User = require("./models/User.js")
 
 const app = express();
@@ -20,15 +19,15 @@ app.use(express.json())
 /* Routing the authentication requests */
 app.use("/api/auth", userRouter)
 
-app.post("/api/login", async (req, res) => {
-  const { email, password } = req.body
-  try {
-    const user = await User.find({ email })
-    res.json({email, password})
-  } catch (error) {
-    res.status(400).json({message: error.message})
-  }
-})
+// app.post("/api/login", async (req, res) => {
+//   const { email, password } = req.body
+//   try {
+//     const user = await User.find({ email })
+//     res.json({email, password})
+//   } catch (error) {
+//     res.status(400).json({message: error.message})
+//   }
+// })
 
 app.post("/api/sign-up", async (req, res) => {
   const { username, email, password } = req.body
@@ -48,5 +47,3 @@ const port = 3000;
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
-
-
