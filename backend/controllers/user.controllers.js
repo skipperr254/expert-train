@@ -26,15 +26,31 @@ const userLoginController = async (req, res) => {
 }
 
 /* Sign up controller */
-const userRegistrationController = (req, res) => {
-    /* receive data from the request */
-    const { usename, email, password } = req.body
+const userRegistrationController = async (req, res) => {
+    const { username, email, password } = req.body
 
-    /* check if email and username are already in use */
+    try {
+        const existingUserbyEmail = await User.findOne({ email })
 
-    /* hash your password */
+        if (existingUserbyEmail) {
+            return res.status(409).json({ message: "This email already has an account"})
+        }
 
-    /* create the user */
+        const existingUserbyUsername = await User.findOne({ username })
+
+        if (existingUserbyUsername) {
+            return res.status(409).json({ message: "This username is already taken"})
+        }  
+
+        const hashedPassword = await bcrypt.hash(password, 12)
+        const user = await User.create({ username, email, password: hashedPassword})
+
+        return res.status(201).json({ message: "Account created successfully"})
+
+    } catch(error) {
+        console.log(error.message)
+        res.status(500).json({ message: "Internal server error"})
+    }
 }
 
 module.exports = {

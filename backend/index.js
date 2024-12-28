@@ -19,16 +19,6 @@ app.use(express.json())
 /* Routing the authentication requests */
 app.use("/api/auth", userRouter)
 
-// app.post("/api/login", async (req, res) => {
-//   const { email, password } = req.body
-//   try {
-//     const user = await User.find({ email })
-//     res.json({email, password})
-//   } catch (error) {
-//     res.status(400).json({message: error.message})
-//   }
-// })
-
 app.post("/api/sign-up", async (req, res) => {
   const { username, email, password } = req.body
 

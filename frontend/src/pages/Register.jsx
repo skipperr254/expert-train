@@ -14,7 +14,7 @@ const Register = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3000/api/sign-up", {
+      const response = await fetch("http://localhost:3000/api/auth/sign-up", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,13 +22,15 @@ const Register = () => {
         body: JSON.stringify({ username, email, password }),
       });
 
-      console.log("Response", response);
       const result = await response.json();
-      if (result.error.code === 11000) {
-        setError("Username already taken. Try another one");
+
+      if (response.status === 201) {
+        navigate("/login");
+      } else {
+        setError(result.message);
       }
-      //   navigate("/login");
     } catch (error) {
+      console.log("Catched error: ", error);
       setError(error.message);
     }
   };
